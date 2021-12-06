@@ -10,6 +10,7 @@ class Server {
         this.usersPath = '/users';
         this.loginPath = '/authentication';
         this.administratorsPath = '/administrators';
+        this.rolePath = '/roles';
         this.middlewares();
         this.dbConnection();
         this.routes();
@@ -19,17 +20,14 @@ class Server {
         //cors
         this.app.use(cors());
 
-        //Directorio público
         this.app.use(express.static('public'));
-    
-        //Lectura y parseo del body 
-        this.app.use(express.json ());
+        this.app.use(express.json());
    }
 
     async dbConnection () {
         try {
            await db.authenticate();
-           console.log('database  connected successfully')
+           console.log('database  connected successfully!')
         } catch (error) {
             console.log('Unable to connect to the database:'+error)
         }
@@ -39,6 +37,7 @@ class Server {
         this.app.use(this.loginPath, require('../routes/authentication'));
         this.app.use(this.usersPath, require('../routes/user'));
         this.app.use(this.administratorsPath, require('../routes/administrator'));
+        this.app.use(this.rolePath, require('../routes/role'))
     }
 
     listen () {

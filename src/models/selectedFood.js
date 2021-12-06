@@ -1,17 +1,39 @@
 const { DataTypes } = require('sequelize');
 const { db } = require('../db/config')
 
-const selected_food = db.define('Selected_food', 
+const SelectedFood = db.define('SelectedFood', 
 {
-    id_selected_food: {
-        type: DataTypes.INTEGER,
-        primaryKey: true
+    idSelectFood: {
+        type: DataTypes.SMALLINT,
+        autoIncrement: true,
+        primaryKey: true,
+        field: 'id_selected_food',
+        validate: {isNumeric:true}
     },
-    selected_food_name: {
-        type: DataTypes.STRING
+    fkUser: {
+        type: DataTypes.SMALLINT,
+        allowNull: false,
+        field: 'fk_user',
+        validate: {isNumeric:true},
+        references: {
+            model: 'User',
+            key: 'idUser'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
     },
-    fk_id_email: {
-        type: DataTypes.STRING
+    food: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        primaryKey: true,
+        field: 'food',
+        validate: {is:[/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]+$/]}
+    },
+    foodGroup: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        field: 'food_group',
+        validate: {is:[/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]+$/]}
     }
 }, {
     tableName: 'selected_foods',
@@ -19,7 +41,5 @@ const selected_food = db.define('Selected_food',
     updatedAt:false
 });
 
-module.exports = {
-    selected_food
-}
+module.exports = SelectedFood
 

@@ -1,27 +1,23 @@
 const { DataTypes } = require('sequelize');
 const { db } = require('../db/config')
 
-const Role = db.define('Role',
-{   
-    idRole: {
+const ImcClasification = db.define('ImcClasification', {
+    idImc: {
         type: DataTypes.SMALLINT,
         autoIncrement: true,
         primaryKey: true,
-        field: 'id_role',
+        field: 'id_imc',
         validate: {isNumeric:true}
     },
-    role: {
+    value: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
-        primaryKey: true,
-        field: 'role',
+        field: 'value'
     }
-},{
-    tableName: 'roles',
+}, {
+    tableName: 'imc_clasification',
     createdAt: false,
     updatedAt:false
 });
 
-
-module.exports = Role;
+module.exports = ImcClasification;
