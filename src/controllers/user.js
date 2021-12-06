@@ -12,7 +12,7 @@ const registerUser = async ( req = request, res = response ) => {
 
         await user.save();
         res.status(201).json({
-            msg: 'User saved successfully'
+            msg: 'User registered successfully!'
         });
     } catch ( error ) {
         console.log( error );

@@ -49,6 +49,17 @@ const activeStatus = async ( req = request, res = response, next ) => {
     }
 }
 
+const idRoleExists = async ( req = request, res = response, next) => {
+    const { id } = req.params;
+    const idRoleExists = await Role.findByPk( id );
+    if (!idRoleExists) {
+        res.status(404).json({
+            msg: `Role with ID ${id} not found`
+        })
+    }
+    next();
+}
+
 
 
 
@@ -57,5 +68,5 @@ module.exports = {
     usernameExists,
     idExists, 
     activeStatus,
-
+    idRoleExists
 }
