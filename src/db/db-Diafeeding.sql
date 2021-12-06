@@ -1,4 +1,3 @@
-
 SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'diafeeding';
 DROP DATABASE IF EXISTS diafeeding;
 DROP SCHEMA public;
@@ -17,7 +16,7 @@ CREATE DOMAIN email AS VARCHAR NOT NULL
 	CHECK (VALUE ~'^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
 
 CREATE DOMAIN name AS VARCHAR NOT NULL
-	CHECK (VALUE ~'^[A-Za-z��������������\s]+$');
+	CHECK (VALUE ~'^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]+$');
 	
 CREATE DOMAIN telefono AS VARCHAR NOT NULL
 	CHECK (VALUE ~'^[+]{1}[\d]{8,15}$');
