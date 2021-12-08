@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { validateJWT, containesRole, idExists, activeStatus, emailExists, usernameExists, validateFields, validateHour } = require('../middlewares/index');
-const { validEmail, validPassword, validTime, validUsername, validFullname } = require('../helpers/validateDB')
+const { validEmail, validPassword, validTime, validFullname, validCellphone } = require('../helpers/validateDB')
 const { consultUser, registerUser, updateUser, deleteUser } = require('../controllers/user')
 
 
@@ -11,18 +11,14 @@ const router = Router();
 router.post('/register',[
     check('email','Email required').not().isEmpty().custom(validEmail),
     check('fullname', 'Fullname required').not().isEmpty().custom(validFullname),
-    check('username', 'Username required').not().isEmpty().custom(validUsername),
+    check('cellphone','Cellphone required').not().isEmpty().custom(validCellphone),
     check('password', 'Password required').not().isEmpty().custom(validPassword),
-    check('wakeUp', 'Wake up required').not().isEmpty().custom(validTime),
-    check('sleep', 'Sleep required').not().isEmpty().custom(validTime),
     emailExists,
-    usernameExists,
-    validateHour,
     validateFields
 ],  registerUser);
 
 
-router.get('/registered/:id',[
+router.get('/registered/:idUser',[
     validateJWT,
     containesRole('ADMIN_ROLE'),
     idExists,
@@ -30,7 +26,7 @@ router.get('/registered/:id',[
     validateFields
 ],consultUser);
 
-router.put('/update/:id',[
+router.put('/update/:idUser',[
     validateJWT,
     containesRole('ADMIN_ROLE','USER_ROLE'),
     check('fullname').custom(validFullname),
@@ -42,7 +38,7 @@ router.put('/update/:id',[
     validateFields
 ],updateUser);
 
-router.delete('/delete/:id',[
+router.delete('/delete/:idUser',[
     validateJWT,
     containesRole('ADMIN_ROLE'),
     idExists,

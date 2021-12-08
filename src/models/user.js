@@ -23,21 +23,16 @@ const User = db.define('User',
         field: 'fullname',
         validate: {is:[/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]+$/]}
     },
-    telefono: {
+    cellphone: {
         type: DataTypes.STRING,
         allowNull: false,
-        field: 'telefono',
+        field: 'cellphone',
         validate: {is:[/^[+]{1}[\d]{8,15}$/]}
     },
     password: {
         type: DataTypes.STRING,
         allowNull: false,
         field: 'password',
-    },
-    status: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true,
-        field: 'status'
     },
     role: {
         type: DataTypes.STRING,
@@ -49,11 +44,18 @@ const User = db.define('User',
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
-    }
+    },
+    status: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+        field: 'status'
+    },
 }, {
     tableName: 'users',
     createdAt: false,
     updatedAt:false
 });
 
-module.exports = User;
+module.exports = {
+    User
+};

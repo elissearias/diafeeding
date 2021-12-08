@@ -5,9 +5,9 @@ const { User } = require('../models/user');
 
 //Endpoint to register Administrator
 const registerAdministrator = async ( req = request, res = response ) => {
-    const { email, fullname, username, password, wakeUp, sleep }  = req.body;
+    const { email, fullname, cellphone, password,role }  = req.body;
     try {
-        const user = new User({ email, fullname, username, password, wakeUp, sleep, role:'ADMIN_ROLE' });  
+        const user = new User({ email, fullname, username, password, wakeUp, sleep, role});  
         const salt = bcryptjs.genSaltSync();
         user.password = bcryptjs.hashSync(password, salt);
 

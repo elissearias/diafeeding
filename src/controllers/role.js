@@ -7,7 +7,10 @@ const registerRole = async ( req = request, res = response ) => {
     try {
         const rol = new Role({ role });
         await rol.save();
+        
+        const {idRole} = await Role.findOne({where:{role}}); 
         res.status(201).json({
+            idRole,
             msg: `role ${role} registered successfully!`
         })
     } catch (error) {
@@ -19,9 +22,9 @@ const registerRole = async ( req = request, res = response ) => {
 
 //Endpoin to delete roles
 const deleteRole = async ( req = request, res = response ) => {
-    const { id } = req.params;
-    const role = await Role.findByPk( id );
-    await role.destroy();
+    const { idRole } = req.params;
+    const role = await Role.findByPk( idRole );
+    await role.update({status:false})
     res.status(302).json({
         msg: `Role deleted`
     })

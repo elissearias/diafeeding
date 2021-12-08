@@ -1,17 +1,21 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { idRoleExists } = require('../middlewares/searches')
-
-
 const { registerRole, deleteRole } = require('../controllers/role');
+const { roleExists, idRoleExists } = require('../middlewares/searches');
+const { validateFields } = require('../middlewares/validateFields');
 
 const router = Router();
 
-router.post('/register',registerRole);
+router.post('/register',[
+    roleExists,
+    validateFields
+], registerRole);
 
-router.delete('/delete/:id',[
-    idRoleExists,    
-],deleteRole)
+router.delete('/delete/:idRole', [
+    idRoleExists,
+    validateFields
+], deleteRole)
+
 
 
 module.exports = router;

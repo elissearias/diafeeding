@@ -16,9 +16,9 @@ CREATE DOMAIN email AS VARCHAR NOT NULL
 	CHECK (VALUE ~'^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
 
 CREATE DOMAIN name AS VARCHAR NOT NULL
-	CHECK (VALUE ~'^[A-Za-z√Å√â√ç√ì√ö√ú√ë√°√©√≠√≥√∫√º√±\s]+$');
+	CHECK (VALUE ~'^[A-Za-z¡…Õ”⁄‹—·ÈÌÛ˙¸Ò\s]+$');
 	
-CREATE DOMAIN telefono AS VARCHAR NOT NULL
+CREATE DOMAIN cellphone AS VARCHAR NOT NULL
 	CHECK (VALUE ~'^[+]{1}[\d]{8,15}$');
 
 CREATE DOMAIN fk AS SMALLINT NOT NULL;
@@ -31,6 +31,7 @@ CREATE DOMAIN times AS TIME NOT NULL;
 CREATE TABLE roles(
 	id_role SMALLSERIAL,
 	role VARCHAR NOT NULL UNIQUE,
+	status BOOLEAN DEFAULT TRUE,
 	PRIMARY KEY (id_role, role)
 );
 
@@ -60,10 +61,10 @@ CREATE TABLE users(
 	id_user SMALLSERIAL,
 	email email UNIQUE,
 	fullname name,
-	telefono telefono,
+	cellphone cellphone,
 	password VARCHAR NOT NULL,
-	status BOOLEAN DEFAULT TRUE,
 	fk_role VARCHAR NOT NULL,
+	status BOOLEAN DEFAULT TRUE,
 	PRIMARY KEY (id_user),
 	FOREIGN KEY (fk_role) REFERENCES roles (role)
 	ON UPDATE CASCADE 
@@ -172,3 +173,5 @@ CREATE TABLE combinations_foods(
 	ON DELETE CASCADE
 	ON UPDATE CASCADE
 );
+
+

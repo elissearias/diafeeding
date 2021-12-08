@@ -16,11 +16,11 @@ const validFullname = async (fullname = '') => {
      }
 }
 
-const validUsername = async (username = '') => {
-     if (/^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._-]+(?<![_.])$/.test(username)){
+const validCellphone = async ( cellphone = '') => {
+     if (/^[+]{1}[\d]{8,15}$/.test(cellphone)){
           return true;
      }else {
-          throw new Error(`Username ${username} is not valid`);
+          throw new Error(`cellphone ${cellphone} is not valid`)
      }
 }
 
@@ -68,12 +68,12 @@ const validPassword = async (password = '') => {
  
 
 module.exports = {
-    validEmail,
-    validFullname,
-    validUsername,
-    validPassword,
-    validTime,
-    validIdMeal,
-    validTypeMeal,
-    validFoodName
+     validEmail,
+     validFullname,
+     validCellphone,
+     validPassword,
+     validTime,
+     validIdMeal,
+     validTypeMeal,
+     validFoodName
 }

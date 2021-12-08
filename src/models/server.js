@@ -36,8 +36,8 @@ class Server {
     routes(){
         this.app.use(this.loginPath, require('../routes/authentication'));
         this.app.use(this.usersPath, require('../routes/user'));
-        this.app.use(this.administratorsPath, require('../routes/administrator'));
-        this.app.use(this.rolePath, require('../routes/role'))
+        //this.app.use(this.administratorsPath, require('../routes/administrator'));
+        this.app.use(this.rolePath, require('../routes/role'));
     }
 
     listen () {

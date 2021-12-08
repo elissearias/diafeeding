@@ -8,7 +8,7 @@ const Role = db.define('Role',
         autoIncrement: true,
         primaryKey: true,
         field: 'id_role',
-        validate: {isNumeric:true}
+        validate: {isNumeric:true},
     },
     role: {
         type: DataTypes.STRING,
@@ -16,6 +16,11 @@ const Role = db.define('Role',
         unique: true,
         primaryKey: true,
         field: 'role',
+    },
+    status: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+        field: 'status'
     }
 },{
     tableName: 'roles',
@@ -24,4 +29,6 @@ const Role = db.define('Role',
 });
 
 
-module.exports = Role;
+module.exports = { 
+    Role
+};

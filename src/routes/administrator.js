@@ -12,7 +12,6 @@ const router = Router();
 router.post('/register', [
     check('email','Email required').not().isEmpty().custom(validEmail),
     check('fullname', 'Fullname required').not().isEmpty().custom(validFullname),
-    check('username', 'Username required').not().isEmpty().custom(validUsername),
     check('password', 'Password required').not().isEmpty().custom(validPassword),
     check('wakeUp', 'Wake up required').not().isEmpty().custom(validTime),
     check('sleep', 'Sleep required').not().isEmpty().custom(validTime),
