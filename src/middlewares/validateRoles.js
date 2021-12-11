@@ -1,5 +1,6 @@
 const { request, response } = require('express');
-const { Role } = require('../models/role')
+
+
 const isAdminrole = ( req = request, res = response, next ) => {
     if ( !req.user ){
         return res.status(500).json({
@@ -37,5 +38,5 @@ const containesRole = (...roles) => {
 
 module.exports = {
     isAdminrole,
-    containesRole,
+    containesRole
 }

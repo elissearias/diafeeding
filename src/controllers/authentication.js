@@ -1,6 +1,7 @@
 const { request, response } = require('express')
 const bcryptjs = require('bcryptjs')
 const { User } = require('../models/user');
+const { Role } = require('../models/role');
 const { generateJWT } = require('../helpers/generateJWT') 
 
 
@@ -48,6 +49,72 @@ const login = async (req = request, res = response) => {
     }
 }
 
+//Endpoint to register User and verify that role exists as USER_ROLE
+const saveUserRole =  (role = '') => {
+    return async ( req = request, res = response ) => {
+        try {
+            const rol = await Role.findOne({where:{role}});
+            if(rol){
+                const { email, fullname, cellphone, password }  = req.body;
+                const user = new User({ email, fullname, cellphone, password, role}); 
+                const salt = bcryptjs.genSaltSync();
+                user.password = bcryptjs.hashSync(password, salt);
+                
+                await user.save();
+    
+                const token = await generateJWT( user.email ); 
+    
+                const {idUser} = await User.findOne({where:{email}}) 
+                res.status(201).json({
+                    idUser,
+                    token,
+                    msg: 'User registered successfully!'
+                });
+            }else {
+                res.status(404).json({
+                    msg: `Role ${role} with which you want to register does not exist`
+                })
+            }
+        } catch ( error ) {
+            console.log( error );
+            res.status(500).json({
+                msg: 'error contact the Administrator'
+            })
+        }
+    }
+}
+
+const saveManagerRoles = async ( req = request, res = response ) => {
+
+    try 
+    {
+        const { email, fullname, cellphone, password, role }  = req.body;
+    
+        const user = new User({ email, fullname, cellphone, password, role}); 
+        const salt = bcryptjs.genSaltSync();
+        user.password = bcryptjs.hashSync(password, salt);
+                
+        await user.save();
+    
+        const token = await generateJWT( user.email ); 
+    
+        const {idUser} = await User.findOne({where:{email}}) 
+        res.status(201).json({
+            idUser,
+            token,
+            msg: 'User registered successfully!'
+        })
+    } catch ( error ) {
+        console.log( error );
+        res.status(500).json({
+            msg: 'error contact the Administrator'
+        })
+    }
+}
+
+
 module.exports = {
-    login
+    login,
+    saveUserRole,
+    saveManagerRoles
 }

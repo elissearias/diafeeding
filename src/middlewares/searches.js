@@ -9,7 +9,9 @@ const emailExists = async ( req = request, res = response, next ) => {
         res.status(302).json({
             msg: `Email ${email} is already registered`
         })
-    }else { next(); }
+    }else{
+        next(); 
+    }  
 }
 
 const idExists = async ( req = request, res = response, next ) => {
@@ -20,22 +22,16 @@ const idExists = async ( req = request, res = response, next ) => {
             msg: `User with ID ${idUser} not found`
         }) 
     } else {
-        next();
+        if( !idExists.status ){
+            res.status(404).json({
+                msg: `User with ID ${id} inactive`
+            })
+        }else {
+            next();
+        }
     }
 }
 
-const activeStatus = async ( req = request, res = response, next ) => {
-    const { id } = req.params;
-    const { status } = await User.findByPk( id )
-
-    if (!status){
-        res.status(404).json({
-            msg: `User with ID ${id} inactive`
-        })
-    } else {
-        next();
-    }
-}
 
 const roleExists = async ( req = request, res = response, next) => {
     const { role } = req.body;
@@ -54,23 +50,42 @@ const idRoleExists = async ( req = request, res = response, next) => {
     const idRoleExists = await Role.findByPk( idRole );
     if (!idRoleExists){
         res.status(404).json({
-            msg: `Role with ${idRole} not found`
+            msg: `Role with ID: ${idRole} not found`
         })
     }else{
-        next();
+        if (!idRoleExists.status){
+            res.status(404).json({
+                msg: `Role with ID: ${idRole} inactive`
+            })
+        }else{
+            next();
+        }
     }
 }
 
-
-
-
-
+const activeRole = async ( req = request, res = response, next ) => {
+    const { role } = req.body;
+    const activeRole = await Role.findOne({where:{role}});
+    if (!activeRole){
+        res.status(404).json({
+            msg: `Role ${role} with which you want to register does not exist`
+        })
+    }else{
+        if (!activeRole.status){
+            res.status(404).json({
+                msg: `Role ${role} with which you want to register it's found inactive`
+            })
+        } else {
+            next();
+        }
+    }
+}
 
 
 module.exports = {
     emailExists,
     idExists, 
-    activeStatus,
     roleExists,
-    idRoleExists
+    idRoleExists,
+    activeRole
 }

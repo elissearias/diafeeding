@@ -9,7 +9,7 @@ class Server {
         this.port = process.env.PORT || '3000';
         this.usersPath = '/users';
         this.loginPath = '/authentication';
-        this.administratorsPath = '/administrators';
+        this.managersPath = '/managers';
         this.rolePath = '/roles';
         this.middlewares();
         this.dbConnection();
@@ -36,7 +36,7 @@ class Server {
     routes(){
         this.app.use(this.loginPath, require('../routes/authentication'));
         this.app.use(this.usersPath, require('../routes/user'));
-        //this.app.use(this.administratorsPath, require('../routes/administrator'));
+        this.app.use(this.managersPath, require('../routes/manager'));
         this.app.use(this.rolePath, require('../routes/role'));
     }
 
