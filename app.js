@@ -11,7 +11,7 @@ const server = new Server();
 //foods.allFoodsGet('foods','groups','verduras,azucares_sin_grasa');
 
 
-
+console.log("Hola")
 
 
 server.listen();
