@@ -1,6 +1,7 @@
 const { request, response } = require('express')
 const bcryptjs = require('bcryptjs')
 const { User } = require('../models/user');
+const { UserDetail } = require('../models/userDetail')
 const { Role } = require('../models/role');
 const { generateJWT } = require('../helpers/generateJWT') 
 
@@ -55,18 +56,20 @@ const saveUserRole =  (role = '') => {
         try {
             const rol = await Role.findOne({where:{role}});
             if(rol){
-                const { email, fullname, cellphone, password }  = req.body;
+                const { email, fullname, cellphone, password, wakeUp, sleep, weight, height, dateBirth, gender, activity }  = req.body;
                 const user = new User({ email, fullname, cellphone, password, role}); 
                 const salt = bcryptjs.genSaltSync();
                 user.password = bcryptjs.hashSync(password, salt);
                 
                 await user.save();
+                const { idUser } = await User.findOne({where:{email}});
+
+                const userDetail = new UserDetail({ idUser, wakeUp, sleep, weight, height, dateBirth, gender, activity }); 
+                await userDetail.save();
     
                 const token = await generateJWT( user.email ); 
     
-                const {idUser} = await User.findOne({where:{email}}) 
                 res.status(201).json({
-                    idUser,
                     token,
                     msg: 'User registered successfully!'
                 });

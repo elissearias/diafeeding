@@ -19,7 +19,7 @@ router.post('/register',[
 
 router.get('/registered/:idUser',[
     validateJWT,
-    containesRole('ADMIN_ROLE'),
+    containesRole('ADMIN_ROLE','USER_ROLE'),
     idExists,
     validateFields
 ],consultUser);
@@ -35,7 +35,7 @@ router.put('/update/:idUser',[
 
 router.delete('/delete/:idUser',[
     validateJWT,
-    containesRole('ADMIN_ROLE'),
+    containesRole('ADMIN_ROLE','USER_ROLE'),
     idExists,
     validateFields
 ], deleteUser);
