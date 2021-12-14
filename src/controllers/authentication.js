@@ -72,7 +72,7 @@ const saveUserRole =  (role = '') => {
                 });
             }else {
                 res.status(404).json({
-                    msg: `Role ${role} with which you want to register does not exist`
+                    msg: `Role ${role}  does not exist`
                 })
             }
         } catch ( error ) {
