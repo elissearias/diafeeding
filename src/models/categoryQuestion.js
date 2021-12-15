@@ -21,4 +21,6 @@ const CategoryQuestion = db.define('CategoryQuestion',{
 });
 
 
-module.exports = CategoryQuestion;
+module.exports = {  
+    CategoryQuestion
+};

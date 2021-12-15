@@ -2,12 +2,12 @@ const { DataTypes } = require('sequelize');
 const { db } = require('../db/config');
 
 const UserDetail = db.define('UserDetail',{
-    fkUser: {
+    idUser: {
         type: DataTypes.SMALLINT,
         allowNull: false,
         primaryKey: true,
         field: 'fk_user',
-        validate: {isNumeric:true},
+        validate: {isInt:true},
         references: {
             model: 'User',
             key: 'idUser'
@@ -43,7 +43,7 @@ const UserDetail = db.define('UserDetail',{
         type: DataTypes.DATE,
         allowNull: false,
         field: 'date_birth',
-        validate: {is:[/([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})$/]}
+        validate: {isDate:true}
     },
     gender: {
         type: DataTypes.BOOLEAN,
@@ -62,4 +62,6 @@ const UserDetail = db.define('UserDetail',{
     updatedAt:false
 });
 
-module.exports = UserDetail;
+module.exports =  { 
+    UserDetail
+}

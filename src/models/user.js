@@ -50,6 +50,16 @@ const User = db.define('User',
         defaultValue: true,
         field: 'status'
     },
+    google: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        field: 'google'
+    },
+    facebook: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        field: 'facebook'
+    }
 }, {
     tableName: 'users',
     createdAt: false,

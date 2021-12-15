@@ -24,7 +24,7 @@ const idExists = async ( req = request, res = response, next ) => {
     } else {
         if( !idExists.status ){
             res.status(404).json({
-                msg: `User with ID ${id} inactive`
+                msg: `User with ID ${idUser} inactive`
             })
         }else {
             next();

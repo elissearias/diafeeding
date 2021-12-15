@@ -63,12 +63,26 @@ CREATE TABLE users(
 	email email UNIQUE,
 	fullname name,
 	cellphone cellphone,
-	password VARCHAR NOT NULL,
+	password VARCHAR,
 	fk_role VARCHAR NOT NULL,
 	status BOOLEAN DEFAULT TRUE,
+	google BOOLEAN,
+	facebook BOOLEAN,
 	PRIMARY KEY (id_user),
 	FOREIGN KEY (fk_role) REFERENCES roles (role)
 	ON UPDATE CASCADE 
+	ON DELETE CASCADE
+);
+
+CREATE TABLE password_recovery(
+	fk_user fk,
+	creation_date dates DEFAULT NOW(),
+	code_verification VARCHAR,
+	expired BOOLEAN,
+	expired_date dates,
+	PRIMARY KEY (fk_user),
+	FOREIGN KEY (fk_user) REFERENCES users (id_user)
+	ON UPDATE CASCADE
 	ON DELETE CASCADE
 );
 
@@ -141,7 +155,7 @@ CREATE TABLE users_details(
 	sleep times,
 	weight DECIMAL NOT NULL,
 	height DECIMAL NOT NULL,
-	dateBirth dates,
+	date_birth dates,
 	gender BOOLEAN NOT NULL,
 	activity SMALLINT NOT NULL,
 	PRIMARY KEY (fk_user),
@@ -159,7 +173,6 @@ CREATE TABLE selected_foods(
 	FOREIGN KEY (fk_user) REFERENCES users (id_user)
 	ON UPDATE CASCADE
 	ON DELETE CASCADE
-	
 );
 
 CREATE TABLE combinations_foods(

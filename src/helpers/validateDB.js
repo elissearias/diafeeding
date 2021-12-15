@@ -57,15 +57,13 @@ const validPassword = async (password = '') => {
  }
 
  const validFoodName = async (foodName = '') => {
-     if (/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]+$/.test(nameFood)){
+     if (/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]+$/.test(foodName)){
           return true;
      }else {
           throw new Error(`Name food ${foodName} is not valid`)
      }
 }
 
-
- 
 
 module.exports = {
      validEmail,
