@@ -34,4 +34,6 @@ const PrefQuestion = db.define('PrefQuestion',{
     updatedAt:false
 });
 
-module.exports = PrefQuestion;
+module.exports = {  
+    PrefQuestion
+};
